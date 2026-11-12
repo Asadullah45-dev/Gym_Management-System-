@@ -73,3 +73,73 @@ CREATE TABLE sales_history (
 );
 
 COMMIT;
+
+INSERT INTO training (tr_name, tr_date, s_id, st_id)
+VALUES ('Weight Training - Kabul', DATE '2026-01-05', 1, 1);
+
+INSERT INTO training (tr_name, tr_date, s_id, st_id)
+VALUES ('Bodybuilding Training - Kandahar', DATE '2026-01-08', 2, 2);
+
+INSERT INTO training (tr_name, tr_date, s_id, st_id)
+VALUES ('Fitness and Cardio - Herat', DATE '2026-01-12', 3, 3);
+
+INSERT INTO training (tr_name, tr_date, s_id, st_id)
+VALUES ('Strength Training - Mazar', DATE '2026-01-15', 4, 4);
+
+INSERT INTO training (tr_name, tr_date, s_id, st_id)
+VALUES ('Weight Loss Training - Kabul', DATE '2026-01-20', 5, 5);
+
+
+
+BEGIN
+    FOR i IN 1..45 LOOP
+
+        INSERT INTO contest_participation (c_id, s_id)
+        VALUES (
+            MOD(i - 1, 5) + 1,
+            i
+        );
+
+    END LOOP;
+END;
+/
+    
+BEGIN
+    FOR i IN 1..100 LOOP
+       INSERT INTO sales_history (
+            sh_id,
+            s_id,
+            item_quantity,
+            item_price
+        )
+        VALUES (
+            1,
+
+            CASE
+                WHEN MOD(i, 10) = 0 THEN NULL
+                ELSE MOD(i - 1, 45) + 1
+            END,
+
+            MOD(i - 1, 4) + 1,
+
+            CASE MOD(i - 1, 10)
+                WHEN 0 THEN 4500  -- Protein Powder
+                WHEN 1 THEN 600   -- Gym Gloves
+                WHEN 2 THEN 350   -- Shaker Bottle
+                WHEN 3 THEN 800   -- Resistance Bands
+                WHEN 4 THEN 250   -- Water Bottle
+                WHEN 5 THEN 400   -- Skipping Rope
+                WHEN 6 THEN 1500  -- Weightlifting Belt
+                WHEN 7 THEN 300   -- Gym Towel
+                WHEN 8 THEN 500   -- Wrist Wraps
+                WHEN 9 THEN 1200  -- Yoga Mat
+            END
+        );
+
+    END LOOP;
+END;
+/
+
+COMMIT;
+
+
